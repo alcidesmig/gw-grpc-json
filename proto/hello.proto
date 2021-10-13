@@ -4,7 +4,7 @@ package helloworld;
 
 import "google/api/annotations.proto";
 
-option go_package = "github.com/alcidesmig/go-grpc-poc;hello";
+option go_package = "github.com/alcidesmig/gw-grpc-json";
 
 // The greeting service definition
 service Greeter {

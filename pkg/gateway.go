@@ -5,7 +5,7 @@ import (
 	"log"
 	"net/http"
 
-	gen "go-grpc-poc/gen/hello/proto/proto"
+	gen "go-grpc-poc/gen/proto/proto"
 
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"google.golang.org/grpc"

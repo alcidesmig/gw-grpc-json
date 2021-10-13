@@ -1,0 +1,186 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "proto/user.proto",
+    "version": "1.0"
+  },
+  "tags": [
+    {
+      "name": "User"
+    },
+    {
+      "name": "Greeter"
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/hello": {
+      "post": {
+        "summary": "Sends a greeting",
+        "operationId": "Greeter_SayHello",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/helloworldHelloReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/helloworldHelloRequest"
+            }
+          }
+        ],
+        "tags": [
+          "Greeter"
+        ]
+      }
+    },
+    "/v1/user": {
+      "post": {
+        "summary": "Create a User",
+        "description": "Create a User sending only name as parameter",
+        "operationId": "User_PostUser",
+        "responses": {
+          "200": {
+            "description": "Successfull response",
+            "schema": {
+              "$ref": "#/definitions/userUserResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/userUserRequest"
+            }
+          }
+        ],
+        "tags": [
+          "User"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": [],
+            "OAuth2": [
+              "read",
+              "write"
+            ]
+          }
+        ],
+        "x-irreversible": true
+      }
+    }
+  },
+  "definitions": {
+    "helloworldHelloReply": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string"
+        }
+      },
+      "title": "The response message containing the greetings"
+    },
+    "helloworldHelloRequest": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      },
+      "title": "The request message containing the user's name"
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "userUserRequest": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "required": [
+            "name"
+          ]
+        }
+      },
+      "required": [
+        "name"
+      ]
+    },
+    "userUserResponse": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uint64",
+          "title": "Test comment field OpenAPI"
+        },
+        "name": {
+          "type": "string"
+        },
+        "timestampValue": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "title": "UserResponse"
+    }
+  },
+  "externalDocs": {
+    "description": "gRPC-gateway test",
+    "url": "https://github.com/alcidesmig/gw-grpc-json"
+  }
+}

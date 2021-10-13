@@ -7,7 +7,7 @@ import (
 
 	"google.golang.org/grpc"
 
-	gen "go-grpc-poc/gen/hello/proto/proto"
+	gen "go-grpc-poc/gen/proto/proto"
 )
 
 type HelloService struct {

@@ -1,0 +1,80 @@
+syntax = "proto3";
+
+package user;
+
+import "google/api/annotations.proto";
+import "google/api/field_behavior.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
+import "google/protobuf/timestamp.proto";
+
+// Import path to be used to import the generated pkg
+option go_package = "github.com/alcidesmig/gw-grpc-json";
+
+// OpenAPI annotations
+option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
+    info: {
+      version: "1.0";
+    };
+    external_docs: {
+      url: "https://github.com/alcidesmig/gw-grpc-json";
+      description: "gRPC-gateway test";
+    }
+    schemes: HTTP;
+  };
+  
+// https://github.com/grpc-ecosystem/grpc-gateway/blob/master/examples/internal/proto/examplepb/a_bit_of_everything.proto
+service User {
+  rpc PostUser (UserRequest) returns (UserResponse) {
+    option (google.api.http) = {
+        post: "/v1/user"
+        body: "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+        summary: "Create a User"
+        description: "Create a User sending only name as parameter"
+        tags: "User"
+        security: {
+            security_requirement: {
+                key: "ApiKeyAuth";
+                value: {}
+            }
+            security_requirement: {
+                key: "OAuth2";
+                value: {
+                    scope: "read";
+                    scope: "write";
+                }
+            }
+        }
+        extensions: {
+            key: "x-irreversible";
+            value {
+                bool_value: true;
+            }
+        }
+        responses: {
+            key: "200";
+            value: {
+                description: "Successfull response";
+                schema: {
+                    json_schema: {
+                        ref: ".user.UserResponse";
+                    }
+                }
+            }
+        }
+    };
+  }
+}
+
+message UserRequest {
+  string name = 1 [(google.api.field_behavior) = REQUIRED];
+}
+
+// UserResponse 
+message UserResponse {
+  // Test comment field OpenAPI
+  uint64 id = 1;
+  string name = 2;
+  google.protobuf.Timestamp timestamp_value = 3;
+}

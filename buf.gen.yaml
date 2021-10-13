@@ -9,3 +9,7 @@ plugins:
   - name: grpc-gateway
     out: proto
     opt: paths=source_relative
+  - name: openapiv2
+    out: openapi
+    strategy: all
+    opt: allow_merge=true,merge_file_name=openapi
