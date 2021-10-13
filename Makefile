@@ -1,7 +1,13 @@
+# Run before running protoc-generate
+bootstrap:
+	@go get github.com/googleapis/googleapis\@v0.0.0-20211013172543-4a5dad747316
+	@go get github.com/grpc-ecosystem/grpc-gateway\@v1.16.0
+	@go get github.com/grpc-ecosystem/grpc-gateway/v2@v2.6.0
+
 buf-generate:
 	@buf generate -o gen/. --path ./proto
 
-protoc-generate:
+protoc-generate: bootstrap
 	@protoc -I ./proto \
 		-I$(GOPATH)/pkg/mod/github.com/grpc-ecosystem/grpc-gateway\@v1.16.0/third_party/googleapis \
 		-I$(GOPATH)/pkg/mod/github.com/googleapis/googleapis\@v0.0.0-20211013172543-4a5dad747316 \
